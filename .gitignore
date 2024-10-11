@@ -1,0 +1,10 @@
+/node_modules
+.env
+users.db
+context.db
+*.log
+/deno_dir
+.vscode/
+*.swp
+/dist/
+/build/
