@@ -1,11 +1,11 @@
 import 'jsr:@std/dotenv/load';
-import bot from './clients/bot.ts';
-import { startHandler } from './handlers/start.ts';
-import { textHandler } from './handlers/text.ts';
-import { clearHandler } from './handlers/clear.ts';
-import { audioHandler } from './handlers/audio.ts';
-import { settingsHandler } from './handlers/settings.ts';
-import { settingsMenu } from './menus/settingsMenu.ts';
+import bot from './src/clients/bot.ts';
+import { startHandler } from './src/handlers/start.ts';
+import { textHandler } from './src/handlers/text.ts';
+import { clearHandler } from './src/handlers/clear.ts';
+import { audioHandler } from './src/handlers/audio.ts';
+import { settingsHandler } from './src/handlers/settings.ts';
+import { settingsMenu } from './src/menus/settingsMenu.ts';
 
 if (Deno.env.get('BOT_TOKEN') === undefined) {
 	console.error('BOT_TOKEN is not set');
@@ -35,15 +35,15 @@ if (import.meta.main) {
 			Deno.exit(1);
 		});
 
-	bot.use(settingsMenu); // menus/settingsMenu.ts
-	bot.use(startHandler); // handlers/start.ts
-	bot.use(settingsHandler); // handlers/settings.ts
-	bot.use(clearHandler); // handlers/clear.ts
-	bot.use(textHandler); // handlers/text.ts
-	bot.use(audioHandler); // handlers/audio.ts
+	bot.use(settingsMenu); // src/menus/settingsMenu.ts
+	bot.use(startHandler); // src/handlers/start.ts
+	bot.use(settingsHandler); // src/handlers/settings.ts
+	bot.use(clearHandler); // src/handlers/clear.ts
+	bot.use(textHandler); // src/handlers/text.ts
+	bot.use(audioHandler); // src/handlers/audio.ts
 
 	// catch errors so process doesn't end and keep console clean
-	bot.catch(() => {});
+	bot.catch(() => { });
 
 	bot.start();
 }

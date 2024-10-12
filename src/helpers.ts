@@ -1,3 +1,5 @@
+import { createCanvas, loadImage } from 'https://deno.land/x/canvas/mod.ts';
+
 const shouldBeEscaped = '_*[]()~`>#+-=|{}.!';
 
 // i dont think this code is effective, but i have no idea how to do it better
@@ -66,4 +68,24 @@ export function escapeMarkdown(s: string): string {
 	}
 
 	return result.join('');
+}
+
+export async function getImageBase64(url: string): Promise<string> {
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(response.statusText);
+	}
+
+	const arrayBuffer = await response.arrayBuffer();
+	const bytes = new Uint8Array(arrayBuffer);
+
+	const image = await loadImage(bytes);
+
+	const canvas = createCanvas(image.width(), image.height());
+	const ctx = canvas.getContext('2d');
+	ctx.drawImage(image, 0, 0, image.width(), image.height());
+
+	return `data:image/png;base64,${canvas.toDataURL('image/png', 1.0).split(',')[1]
+		}`;
 }
